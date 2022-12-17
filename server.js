@@ -4,6 +4,7 @@ const cors = require('cors')
 const MongoClient = require('mongodb').MongoClient
 const ObjectId = require('mongodb').ObjectId
 const path = require('path')
+const { get } = require('http')
 
 
 //Use .env file in config folder
@@ -23,42 +24,19 @@ app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json());
 
+const uri = process.env.DB_STRING
+
 //useUnifiedTopolgy and useNewUrlParser are deprecated
-MongoClient.connect(process.env.DB_STRING, {useUnifiedTopology:true, useNewUrlParser: true})
+MongoClient.connect(uri)
 //parameter needs to be the client you're connecting to
 .then(client => {
     console.log('You are connected to the HunterAPI database')
     const db = client.db('hunter-x-hunter')
     const infoCollection = db.collection('hunter-x-hunter-names')
-    //get requests need to inside of our .then()
-    //if we want our app to handle read requests then we need .get()
-
-    //requesting all hunters and rendering on root
-    //the root ejs file is then iterating through all items and displaying them
-    //   app.get('/', (req, res) => {
-    //     infoCollection.find().toArray()
-    //     .then(results => {
-    //         res.render('index.ejs', { hunters: results})
-    //     })
-    //     .catch(error => {
-    //         console.error(error)
-    //     })
-    //   })
 
     app.get('/', (req, res) => {
         res.sendFile('/index.html')
     })
-
-    //requesting a specific hunter by using the id of the hunter image that was clicked
-    //renders the profile.ejs which is set up to render the image and the go back to '/'
-    //button
-    // app.get('/hunter/:id', (req, res) => {
-    //     const id = req.params.id
-    //     infoCollection.find({ "_id": ObjectId(id) }).toArray()
-    //     .then(results => {
-    //         res.render('profile.ejs', {hunter/*this is the variable to be used in ejs and holds the result of the request*/: results[0]})
-    //     })
-    // })
 
     //Tells the server which url to send json info of all hunters
     app.get('/api/hunters', (req, res)=> {
@@ -68,15 +46,6 @@ MongoClient.connect(process.env.DB_STRING, {useUnifiedTopology:true, useNewUrlPa
         })
         .catch(error => console.error(error)) 
     })
-
-    //Tells the server which url to send json info of a single hunter when targeted by its id
-    // app.get('/api/:id', (req, res) => {
-    //     const hunterId = req.params.id
-    //     infoCollection.find({ "_id": ObjectId(hunterId) }).toArray()
-    //     .then(results => {
-    //         res.json(results[0])
-    //     })
-    // })
 
     //request is meant to tell the sever which url to send our json information 
     //back to the client when targeting a single hunter by name
