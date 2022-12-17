@@ -56,12 +56,9 @@ MongoClient.connect(uri)
             console.log(results)
             res.json(results[0])
         })
-        .catch(error => console.error(error))
-        // if(hunters[hunterName]){
-        //     res.json(hunters[hunterName])
-        // }else {
-        //     res.json(hunters["hunter not found"])
-        // }  
+        .catch(error => {
+            console.error(error)
+        })
     })
 })//if you have a .then you should have a .catch to catch the error
 .catch(error => console.error(error))
