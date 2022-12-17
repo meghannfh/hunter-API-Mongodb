@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 const MongoClient = require('mongodb').MongoClient
 const ObjectId = require('mongodb').ObjectId
+const path = require('path')
 
 
 //Use .env file in config folder
@@ -10,10 +11,10 @@ require('dotenv').config({ path: './config/.env' });
 
 //Using EJS for views
 app.set('views', './views');
-app.set("view engine", "ejs");
+app.set("view engine", "html");
 
 //Static folder
-app.use(express.static('/public'))
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Handle cors error
 app.use(cors())
@@ -45,7 +46,7 @@ MongoClient.connect(process.env.DB_STRING, {useUnifiedTopology:true, useNewUrlPa
     //   })
 
     app.get('/', (req, res) => {
-        res.render('index.html')
+        res.sendFile('/index.html')
     })
 
     //requesting a specific hunter by using the id of the hunter image that was clicked
