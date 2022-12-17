@@ -70,13 +70,13 @@ MongoClient.connect(process.env.DB_STRING, {useUnifiedTopology:true, useNewUrlPa
     })
 
     //Tells the server which url to send json info of a single hunter when targeted by its id
-    app.get('/api/:id', (req, res) => {
-        const hunterId = req.params.id
-        infoCollection.find({ "_id": ObjectId(hunterId) }).toArray()
-        .then(results => {
-            res.json(results[0])
-        })
-    })
+    // app.get('/api/:id', (req, res) => {
+    //     const hunterId = req.params.id
+    //     infoCollection.find({ "_id": ObjectId(hunterId) }).toArray()
+    //     .then(results => {
+    //         res.json(results[0])
+    //     })
+    // })
 
     //request is meant to tell the sever which url to send our json information 
     //back to the client when targeting a single hunter by name
@@ -88,11 +88,11 @@ MongoClient.connect(process.env.DB_STRING, {useUnifiedTopology:true, useNewUrlPa
             res.json(results[0])
         })
         .catch(error => console.error(error))
-        if(hunters[hunterName]){
-            res.json(hunters[hunterName])
-        }else {
-            res.json(hunters["hunter not found"])
-        }  
+        // if(hunters[hunterName]){
+        //     res.json(hunters[hunterName])
+        // }else {
+        //     res.json(hunters["hunter not found"])
+        // }  
     })
 })//if you have a .then you should have a .catch to catch the error
 .catch(error => console.error(error))
