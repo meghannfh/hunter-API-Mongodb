@@ -52,13 +52,13 @@ MongoClient.connect(process.env.DB_STRING, {useUnifiedTopology:true, useNewUrlPa
     //requesting a specific hunter by using the id of the hunter image that was clicked
     //renders the profile.ejs which is set up to render the image and the go back to '/'
     //button
-    app.get('/hunter/:id', (req, res) => {
-        const id = req.params.id
-        infoCollection.find({ "_id": ObjectId(id) }).toArray()
-        .then(results => {
-            res.render('profile.ejs', {hunter/*this is the variable to be used in ejs and holds the result of the request*/: results[0]})
-        })
-    })
+    // app.get('/hunter/:id', (req, res) => {
+    //     const id = req.params.id
+    //     infoCollection.find({ "_id": ObjectId(id) }).toArray()
+    //     .then(results => {
+    //         res.render('profile.ejs', {hunter/*this is the variable to be used in ejs and holds the result of the request*/: results[0]})
+    //     })
+    // })
 
     //Tells the server which url to send json info of all hunters
     app.get('/api/hunters', (req, res)=> {
