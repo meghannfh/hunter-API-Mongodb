@@ -45,7 +45,7 @@ MongoClient.connect(process.env.DB_STRING, {useUnifiedTopology:true, useNewUrlPa
     //   })
 
     app.get('/', (req, res) => {
-        res.sendFile(__dirname + '/index.html')
+        res.render('index.html')
     })
 
     //requesting a specific hunter by using the id of the hunter image that was clicked
