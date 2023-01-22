@@ -4,7 +4,6 @@ const cors = require('cors')
 const MongoClient = require('mongodb').MongoClient
 const ObjectId = require('mongodb').ObjectId
 const path = require('path')
-const { get } = require('http')
 
 
 //Use .env file in config folder
